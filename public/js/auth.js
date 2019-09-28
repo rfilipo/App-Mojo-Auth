@@ -20,12 +20,16 @@ let key = getCookieValue('auth_key');
 
 if (key) {
   /* it's auth, send key in header */
+  if (my_path == '/') {
+    my_path = "home";
+  }
+  let params = "auth=true";
   console.log("Have auth key");
-  console.log("Opening /api/url/"+my_path);
+  console.log("Opening /api/post/"+my_path);
   xhr = new XMLHttpRequest();
-  xhr.open('POST', "/api/url/"+my_path, true);
-  xhr.setRequestHeader('AppMojoAuthKey', key);
-  xhr.send("bu");
+  xhr.open('POST', "/api/post/"+my_path, true);
+  xhr.setRequestHeader('App-Mojo-Auth', key);
+  xhr.send(params);
   xhr.addEventListener("load", loadPage);
 } else {
   /* have to authenticate */
